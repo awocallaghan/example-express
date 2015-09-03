@@ -1,13 +1,13 @@
 {
-  "name": "education",
+  "name": "example-express",
   "version": "1.0.0",
-  "description": "Online educational system",
-  "main": "index.js",
+  "description": "Example express website",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alex O'Callaghan",
-  "license": "ISC",
+  "license": "GNL",
   "dependencies": {
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
