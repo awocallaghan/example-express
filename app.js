@@ -14,6 +14,25 @@ var app = module.exports = express();
 var env = (process.env.NODE_ENV || "development");
 var config = require('./config/config')[env];
 
+/* 
+ * Connect to database
+ * - We're using postgresql (pg on npm)
+ */
+var pg = require('pg');
+var conString = "postgres://" + config.DatabaseConfig.user + ":" + config.DatabaseConfig.password + "@" + config.DatabaseConfig.host + "/" + config.DatabaseConfig.name;
+var client = new pg.Client(conString);
+client.connect(function (err) {
+	if (err) {
+		return console.error('Error connecting to postgres database', err);
+	}
+});
+// Middleware to add database client to request object
+// Access the database client at req.client on any request
+app.use(function (req, res, next) {
+	req.client = client;
+	next();
+});
+
 // Configure app
 app.set('views', path.join(__dirname, 'views')); // views are kept in /views folder
 app.set('view engine', 'jade'); // and use jade template engine
@@ -40,7 +59,7 @@ var server = app.listen(config.port, function() {
 /*
  * Handle website routes here
  */
-module.exports.app = app;
+module.exports.app = app; // export express app for routes
 var routes = require('./routes'); // all application routes kept in routes.js
 
 // Error handling after routes
@@ -56,6 +75,6 @@ app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).render('error', {
     title: '500 - Something went wrong',
-    message: 'Sorry, something went wrong!'
+    message: err.message
   });
 });

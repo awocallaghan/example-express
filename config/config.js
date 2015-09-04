@@ -5,9 +5,9 @@ module.exports = {
     DatabaseConfig: {
       port: 27617,
       host: 'localhost',
-      name: 'name',
-      user: 'user',
-      pass: 'pass'
+      name: 'example',
+      user: 'example',
+      password: 'password'
     }
   },
   production: {

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+
+	.jumbotron
+		.container
+			h1 Users page
+	#content.container
+		h2 Add a user
+		form.form-inline(method="post",action="/user/add")
+			.form-group
+				label(for="email") Email
+				input.form-control(type="text", id="email", name="email", placeholder="email address")
+			.form-group
+				label(for="password") Password
+				input.form-control(type="password", id="password", name="password", placeholder="password")
+			button.btn.btn-default(type="submit") Add user
+		h2 Current users
+		table.table
+			thead
+				th Email
+				th Password
+			tbody
+				each user in users
+					tr
+						td= user.email
+						td= user.password
+
